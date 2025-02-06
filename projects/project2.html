@@ -14,6 +14,7 @@
 
 <body>
 
+    <!-- HEADER -->
     <div id="header_wrap" class="outer">
         <header class="inner">
             <h1 id="project_title">Dr Adenowo Gbadebo</h1>
@@ -21,29 +22,78 @@
         </header>
     </div>
 
+    <!-- MAIN CONTENT -->
     <div id="main_content_wrap" class="outer">
         <section id="main_content" class="inner">
-            <h2>Project Overview</h2>
-            <p>Developed a standardized, automated pipeline framework for executing Jupyter Notebooks via **Papermill**, allowing seamless batch execution, error handling, and logging.</p>
 
-            <h2>Project Objectives</h2>
+            <h2>Project Overview</h2>
+            <p>Maintaining consistency and reproducibility in data engineering workflows can be challenging, especially when using interactive tools like Jupyter Notebooks. To address this, I developed a <strong>modular, automated data pipeline framework</strong> that uses <strong>Papermill</strong> to execute notebooks in a controlled, batch environment. The framework supports scheduled batch runs and enables standardized deployment, logging, and error handling.</p>
+            <p>This solution bridges the gap between interactive development and production-grade workflows, ensuring consistency and scalability for machine learning and ETL processes.</p>
+
+            <h2>Objectives</h2>
             <ul>
-                <li>Automate execution of notebooks using **Papermill**.</li>
-                <li>Enable **logging and structured error handling**.</li>
-                <li>Provide a **configurable, modular** execution setup.</li>
+                <li>Enable automated execution of Jupyter Notebooks via <strong>Papermill</strong>.</li>
+                <li>Provide a <strong>modular and configurable</strong> pipeline structure.</li>
+                <li>Automate Python environment setup and dependency management per project.</li>
+                <li>Implement <strong>error logging</strong> and robust file handling for debugging.</li>
+                <li>Allow for seamless batch execution using <strong>batch scripts</strong>.</li>
             </ul>
+
+            <h2>Project Workflow</h2>
+            <ul>
+                <li>Developed a Jupyter Notebook to contain pipeline logic (e.g., data ingestion, transformation, and analysis).</li>
+                <li>Automated execution using Papermill via a batch script (<code>run_pipeline.bat</code>).</li>
+                <li>Created configuration files (<code>run_pipeline.ini</code>) for customizable execution parameters.</li>
+                <li>Automated environment setup using <code>setup_env.bat</code> and <code>requirements.txt</code>.</li>
+                <li>Implemented detailed logging to track execution progress and errors (<code>pipeline_execution.log</code>).</li>
+                <li>Organized processed files into structured directories (<code>downloads/</code>, <code>history/</code>, <code>error/</code>).</li>
+            </ul>
+
+            <h2>Challenges and Solutions</h2>
+            <h3>Reproducibility Across Environments</h3>
+            <p><strong>Challenge:</strong> Ensuring pipeline consistency across machines.<br>
+            <strong>Solution:</strong> Automated virtual environment creation using <code>setup_env.bat</code> and standardized dependency installation via <code>requirements.txt</code>.</p>
+
+            <h3>Automating Notebook Execution</h3>
+            <p><strong>Challenge:</strong> Jupyter Notebooks are interactive, making them hard to integrate into automated workflows.<br>
+            <strong>Solution:</strong> Leveraged <strong>Papermill</strong> to execute parameterized notebooks from the command line, enabling batch execution.</p>
+
+            <h3>Error Handling and Debugging</h3>
+            <p><strong>Challenge:</strong> Debugging pipeline failures during execution.<br>
+            <strong>Solution:</strong> Implemented centralized logging and structured error handling, ensuring invalid files are moved to the <code>error/</code> folder for further inspection.</p>
+
+            <h3>Deployment and Scheduling</h3>
+            <p><strong>Challenge:</strong> Ensuring the pipeline runs automatically at scheduled intervals.<br>
+            <strong>Solution:</strong> Developed <code>create_task.bat</code> to register scheduled jobs with Windows Task Scheduler or Cron Jobs.</p>
 
             <h2>Technologies Used</h2>
             <ul>
-                <li>Jupyter Notebooks</li>
-                <li>Papermill</li>
-                <li>Python Logging</li>
-                <li>Batch Scripting</li>
+                <li><strong>Pipeline Execution:</strong> Jupyter Notebooks, Papermill</li>
+                <li><strong>Automation:</strong> Batch scripts (<code>.bat</code>), Task Scheduler</li>
+                <li><strong>Error Logging:</strong> Python Logging Module</li>
+                <li><strong>Environment Setup:</strong> Virtual Environments, <code>requirements.txt</code></li>
+                <li><strong>Data Management:</strong> Structured file directories (<code>downloads/</code>, <code>history/</code>, <code>error/</code>)</li>
+            </ul>
+
+            <h2>Outcome</h2>
+            <ul>
+                <li><strong>Standardized Deployment:</strong> Ensures consistent execution across different machines and environments.</li>
+                <li><strong>Scalable and Modular:</strong> Configuration files allow adaptation to different projects.</li>
+                <li><strong>Automated Scheduling:</strong> No manual intervention is needed, with scheduled runs ensuring timely processing.</li>
+                <li><strong>Improved Debugging:</strong> Centralized logging simplifies troubleshooting and auditing.</li>
             </ul>
 
             <hr />
             <p><a href="../index.html">← Back to Home</a></p>
+
         </section>
+    </div>
+
+    <!-- FOOTER -->
+    <div id="footer_wrap" class="outer">
+        <footer class="inner">
+            <p>Published with <a href="https://pages.github.com">GitHub Pages</a></p>
+        </footer>
     </div>
 
 </body>
