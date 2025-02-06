@@ -11,7 +11,7 @@ Below are some of my key projects. Click on each to explore details.
 
 | Project Name | Description | Link |
 |-------------|------------|------|
-| **Project 1** | A project about Data Warehousing for Aircall data | [View Project](projects/project1.html) |
+| **Data Warehousing for Aircall data** | A project about fetching data from Aircall and writing data to a relational database | [View Project](projects/project1.html) |
 | **Project 2** | A project about Y | [View Project](projects/project2.html) |
 | **Project 3** | A project about Z | [View Project](projects/project3.html) |
 
