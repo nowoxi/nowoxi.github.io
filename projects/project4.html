@@ -7,8 +7,8 @@
     <meta name="viewport" content="width=device-width,maximum-scale=2">
     <link rel="stylesheet" type="text/css" media="screen" href="/assets/css/style.css">
 
-    <title>Project 4: Marketing Cost Data Processing Pipeline | Dr Adenowo Gbadebo</title>
-    <meta name="description" content="Project 4: Automated pipeline for processing marketing spend data files with schema validation, database insertion, and file lifecycle management.">
+    <title>Project 4: Data Processing Pipeline | Dr Adenowo Gbadebo</title>
+    <meta name="description" content="Project 4: Automated pipeline for processing data files with schema validation, database insertion, and file lifecycle management.">
 
 </head>
 
@@ -18,7 +18,7 @@
     <div id="header_wrap" class="outer">
         <header class="inner">
             <h1 id="project_title">Dr Adenowo Gbadebo</h1>
-            <h2 id="project_tagline">Project 4: Marketing Cost Data Processing Pipeline</h2>
+            <h2 id="project_tagline">Project 4: Data Processing Pipeline</h2>
         </header>
     </div>
 
@@ -27,7 +27,7 @@
         <section id="main_content" class="inner">
 
             <h2>Project Overview</h2>
-            <p>This project implements an automated pipeline for processing marketing spend data files from SharePoint (OneDrive), validating their schema, inserting the data into a MariaDB database, and managing the file lifecycle. The pipeline runs as a scheduled task and ensures proper handling of erroneous files, while successfully processed files are archived for future reference.</p>
+            <p>This project implements an automated pipeline for processing data files from SharePoint (OneDrive), validating their schema, inserting the data into a MariaDB database, and managing the file lifecycle. The pipeline runs as a scheduled task and ensures proper handling of erroneous files, while successfully processed files are archived for future reference.</p>
 
             <h2>Pipeline Workflow</h2>
             <ul>
@@ -53,7 +53,7 @@
 
             <h2>Project Structure</h2>
             <pre>
-Marketing_Cost_Pipeline/
+Data_Pipeline/
 │   run_pipeline.bat                # Batch script to run pipeline
 │   run_pipeline.ini                # Configuration file for pipeline execution
 │   pipeline_execution.log          # Log file for pipeline execution
@@ -84,7 +84,7 @@ schema:
       type: "string"
     - name: "white_label"
       type: "string"
-    - name: "Marketing_Channel"
+    - name: "Channel"
       type: "string"
     - name: "description"
       type: "string"
@@ -105,11 +105,11 @@ schema:
 
             <h2>Database Schema (MariaDB)</h2>
             <pre>
-CREATE TABLE `marketing_spend` (
+CREATE TABLE `spend` (
   `fd_month` date NOT NULL,
   `FY` char(6) DEFAULT NULL,
   `white_label` varchar(11) NOT NULL,
-  `Marketing_Channel` varchar(50) NOT NULL,
+  `Channel` varchar(50) NOT NULL,
   `description` varchar(255) NOT NULL,
   `expense_type` varchar(25) NOT NULL,
   `expense_period` varchar(11) DEFAULT NULL,
@@ -117,7 +117,7 @@ CREATE TABLE `marketing_spend` (
   `actual` decimal(13,2) DEFAULT NULL,
   `last_imported` datetime DEFAULT current_timestamp(),
   `created_at` datetime DEFAULT current_timestamp(),
-  PRIMARY KEY (`fd_month`,`white_label`,`Marketing_Channel`,`expense_type`,`description`)
+  PRIMARY KEY (`fd_month`,`white_label`,`Channel`,`expense_type`,`description`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
             </pre>
 
@@ -164,7 +164,7 @@ CREATE TABLE `marketing_spend` (
 
             <h2>Outcome</h2>
             <ul>
-                <li><strong>Automated Data Processing:</strong> Marketing spend files are processed efficiently with minimal manual intervention.</li>
+                <li><strong>Automated Data Processing:</strong> files are processed efficiently with minimal manual intervention.</li>
                 <li><strong>Accurate Data Validation:</strong> Schema validation ensures only clean data is stored in the database.</li>
                 <li><strong>File Lifecycle Management:</strong> Processed files are archived, and invalid files are flagged for review.</li>
                 <li><strong>Error Traceability:</strong> Centralized logging simplifies troubleshooting and debugging.</li>
