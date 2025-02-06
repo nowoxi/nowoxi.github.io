@@ -16,7 +16,7 @@ Below are some of my key projects. Click on each to explore details.
 | Data Warehousing for Aircall data | A project about fetching data from Aircall and writing data to a relational database | [View Project](projects/project1.html) |
 | Notebook-Based Pipeline Automation | Jupyter Notebooks + Papermill execution framework. | [View Project](projects/project2.html) |
 | On-Demand Data Pipeline     | Hybrid batch and on-demand pipeline system.    | [View Project](projects/project3.html) |
-| Marketing Cost Data Processing Pipeline   | An automated pipeline for processing marketing spend data files    | [View Project](projects/project4.html) |
+| Data Processing Pipeline   | An automated pipeline for processing data files    | [View Project](projects/project4.html) |
 
 ---
 
