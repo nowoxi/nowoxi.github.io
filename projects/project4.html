@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html lang="en-US">
+
+<head>
+    <meta charset='utf-8'>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width,maximum-scale=2">
+    <link rel="stylesheet" type="text/css" media="screen" href="/assets/css/style.css">
+
+    <title>Project 4: Marketing Cost Data Processing Pipeline | Dr Adenowo Gbadebo</title>
+    <meta name="description" content="Project 4: Automated pipeline for processing marketing spend data files with schema validation, database insertion, and file lifecycle management.">
+
+</head>
+
+<body>
+
+    <!-- HEADER -->
+    <div id="header_wrap" class="outer">
+        <header class="inner">
+            <h1 id="project_title">Dr Adenowo Gbadebo</h1>
+            <h2 id="project_tagline">Project 4: Marketing Cost Data Processing Pipeline</h2>
+        </header>
+    </div>
+
+    <!-- MAIN CONTENT -->
+    <div id="main_content_wrap" class="outer">
+        <section id="main_content" class="inner">
+
+            <h2>Project Overview</h2>
+            <p>This project implements an automated pipeline for processing marketing spend data files from SharePoint (OneDrive), validating their schema, inserting the data into a MariaDB database, and managing the file lifecycle. The pipeline runs as a scheduled task and ensures proper handling of erroneous files, while successfully processed files are archived for future reference.</p>
+
+            <h2>Pipeline Workflow</h2>
+            <ul>
+                <li><strong>Download Files:</strong> Fetch files from SharePoint (OneDrive), ignoring a specific sample file.</li>
+                <li><strong>Validate Schema:</strong>
+                    <ul>
+                        <li>Ensure the file contains 9 expected columns.</li>
+                        <li>Verify date fields use the short date format <code>DD/MM/YYYY</code>.</li>
+                        <li>Ensure currency fields have no symbols or commas and are formatted as <code>0.0</code>.</li>
+                    </ul>
+                </li>
+                <li><strong>Insert Data:</strong> Insert records into MariaDB using batched inserts with <code>ON DUPLICATE KEY UPDATE</code> to update existing entries.</li>
+                <li><strong>File Lifecycle:</strong>
+                    <ul>
+                        <li>Delete files from SharePoint only after successful database insertion.</li>
+                        <li>Move processed files to the <code>history/</code> folder.</li>
+                        <li>Move invalid files to the <code>error/</code> folder if schema validation or insertion fails.</li>
+                    </ul>
+                </li>
+                <li><strong>Logging:</strong> Log all actions and errors for traceability.</li>
+                <li><strong>Scheduled Runs:</strong> Automate execution using Task Scheduler (Windows) or Cron Jobs (Linux).</li>
+            </ul>
+
+            <h2>Project Structure</h2>
+            <pre>
+Marketing_Cost_Pipeline/
+│   run_pipeline.bat                # Batch script to run pipeline
+│   run_pipeline.ini                # Configuration file for pipeline execution
+│   pipeline_execution.log          # Log file for pipeline execution
+│   main_pipeline.ipynb             # Jupyter notebook for processing
+│   test_pipeline.ipynb             # Test notebook for debugging
+│   task_notebook.ipynb             # Task-related notebook
+│
+├───config
+│       .env                     # Environment variables
+│       create_task.bat           # Script to schedule pipeline execution
+│       requirements.txt          # Required dependencies
+│       schema.yml                # Expected schema definition
+│       setup_env.bat             # Environment setup script
+│
+├───downloads                    # Temporary folder for downloaded files
+├───error                        # Folder for files that failed validation
+└───history                      # Folder for successfully processed files
+            </pre>
+
+            <h2>Schema Validation</h2>
+            <p>The expected schema is defined in <code>config/schema.yml</code>:</p>
+            <pre>
+schema:
+  columns:
+    - name: "fd_month"
+      type: "date"
+    - name: "FY"
+      type: "string"
+    - name: "white_label"
+      type: "string"
+    - name: "Marketing_Channel"
+      type: "string"
+    - name: "description"
+      type: "string"
+    - name: "expense_type"
+      type: "string"
+    - name: "expense_period"
+      type: "string"
+    - name: "budget"
+      type: "decimal(13,2)"
+    - name: "actual"
+      type: "decimal(13,2)"
+            </pre>
+            <p>Any additional columns are ignored. Missing values are replaced as follows:</p>
+            <ul>
+                <li><code>Unknown</code> for string fields.</li>
+                <li><code>0.0</code> for decimals.</li>
+            </ul>
+
+            <h2>Database Schema (MariaDB)</h2>
+            <pre>
+CREATE TABLE `marketing_spend` (
+  `fd_month` date NOT NULL,
+  `FY` char(6) DEFAULT NULL,
+  `white_label` varchar(11) NOT NULL,
+  `Marketing_Channel` varchar(50) NOT NULL,
+  `description` varchar(255) NOT NULL,
+  `expense_type` varchar(25) NOT NULL,
+  `expense_period` varchar(11) DEFAULT NULL,
+  `budget` decimal(13,2) DEFAULT NULL,
+  `actual` decimal(13,2) DEFAULT NULL,
+  `last_imported` datetime DEFAULT current_timestamp(),
+  `created_at` datetime DEFAULT current_timestamp(),
+  PRIMARY KEY (`fd_month`,`white_label`,`Marketing_Channel`,`expense_type`,`description`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
+            </pre>
+
+            <h2>Error Handling & Logging</h2>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Error</th>
+                        <th>Action Taken</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>Authentication fails</td>
+                        <td>Log error and exit pipeline</td>
+                    </tr>
+                    <tr>
+                        <td>File download fails</td>
+                        <td>Log error, skip file</td>
+                    </tr>
+                    <tr>
+                        <td>Schema validation fails</td>
+                        <td>Move file to <code>error/</code>, log warning</td>
+                    </tr>
+                    <tr>
+                        <td>Database insert fails</td>
+                        <td>Move file to <code>error/</code>, log error</td>
+                    </tr>
+                    <tr>
+                        <td>SharePoint delete fails</td>
+                        <td>Log warning, but continue</td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <h2>Technologies Used</h2>
+            <ul>
+                <li><strong>Data Storage:</strong> MariaDB</li>
+                <li><strong>Pipeline Execution:</strong> Jupyter Notebooks, Papermill</li>
+                <li><strong>Automation:</strong> Task Scheduler, Batch Scripts</li>
+                <li><strong>Error Logging:</strong> Python Logging Module</li>
+                <li><strong>File Management:</strong> SharePoint (OneDrive)</li>
+            </ul>
+
+            <h2>Outcome</h2>
+            <ul>
+                <li><strong>Automated Data Processing:</strong> Marketing spend files are processed efficiently with minimal manual intervention.</li>
+                <li><strong>Accurate Data Validation:</strong> Schema validation ensures only clean data is stored in the database.</li>
+                <li><strong>File Lifecycle Management:</strong> Processed files are archived, and invalid files are flagged for review.</li>
+                <li><strong>Error Traceability:</strong> Centralized logging simplifies troubleshooting and debugging.</li>
+            </ul>
+
+            <hr />
+            <p><a href="../index.html">← Back to Home</a></p>
+
+        </section>
+    </div>
+
+    <!-- FOOTER -->
+    <div id="footer_wrap" class="outer">
+        <footer class="inner">
+            <p>Published with <a href="https://pages.github.com">GitHub Pages</a></p>
+        </footer>
+    </div>
+
+</body>
+</html>
