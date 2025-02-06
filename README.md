@@ -1,10 +1,13 @@
 # **Welcome to My GitHub Portfolio**  
 
 ## About Me  
-I am an **innovative data analyst** and **chartered engineer** with over **10 years of experience** in field research for **manufacturing, optics, and networking** technologies. My expertise lies in **data-driven decision-making**, enabling **technological advancements**, and **solving complex business challenges**.  
+I am a **Strategic and Innovative Data Analytics Manager** with expertise in **data transformations, advanced data frameworks, and delivering actionable insights** for informed decision-making. My skills span across **financial data pipelines, predictive modeling, and process optimization**.  
+
+I specialize in **bridging technical capabilities with business needs**, ensuring data-driven strategies align with corporate objectives. I am passionate about leveraging **data to create value**, streamline operations, and drive impactful initiatives.  
 
 ## My Data Philosophy  
-I believe in **generating value** while building a **data-centric culture**. Tools are simply **means to an end**, and I always choose the most **efficient** and **scalable** solution—whether it’s a **relational database** for simplicity or a **cloud-based architecture** for complex data processing.
+Data is only valuable when it leads to **measurable impact**. I believe in building **scalable, efficient, and practical solutions**, whether it's **optimizing financial workflows, automating processes, or enhancing predictive analytics**.  
+
 
 ## Projects  
 Below are some of my key projects. Click on each to explore details.  
