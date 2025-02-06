@@ -1,4 +1,3 @@
-# **Welcome to My GitHub Portfolio**  
 
 ## About Me  
 I am a **Strategic and Innovative Data Analytics Manager** with expertise in **data transformations, advanced data frameworks, and delivering actionable insights** for informed decision-making. My skills span across **financial data pipelines, predictive modeling, and process optimization**.  
