@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="en-US">
+
+<head>
+    <meta charset='utf-8'>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width,maximum-scale=2">
+    <link rel="stylesheet" type="text/css" media="screen" href="/assets/css/style.css">
+
+    <title>Project 3: On-Demand Data Pipeline | Dr Adenowo Gbadebo</title>
+    <meta name="description" content="Project 3: On-Demand Data Pipeline with Hybrid Execution">
+
+</head>
+
+<body>
+
+    <!-- HEADER -->
+    <div id="header_wrap" class="outer">
+        <header class="inner">
+            <h1 id="project_title">Dr Adenowo Gbadebo</h1>
+            <h2 id="project_tagline">Project 3: On-Demand Data Pipeline System</h2>
+        </header>
+    </div>
+
+    <!-- MAIN CONTENT -->
+    <div id="main_content_wrap" class="outer">
+        <section id="main_content" class="inner">
+
+            <h2>Project Overview</h2>
+            <p>To reduce inefficiencies in the traditional batch processing system, I developed a hybrid <strong>on-demand pipeline system</strong>. This system allows users to trigger pipeline execution on demand without disrupting existing batch schedules. It ensures minimal resource wastage and significantly reduces user wait times for data processing.</p>
+            <p>By combining on-demand capabilities with legacy batch scheduling, this system provides flexibility for users while maintaining backward compatibility with existing workflows.</p>
+
+            <h2>Objectives</h2>
+            <ul>
+                <li>Optimize resource usage by reducing unnecessary batch runs.</li>
+                <li>Minimize user wait times by enabling immediate pipeline execution after data uploads.</li>
+                <li>Ensure hybrid functionality by supporting both on-demand and scheduled executions.</li>
+                <li>Maintain robust error handling and logging for traceability and troubleshooting.</li>
+            </ul>
+
+            <h2>System Workflow</h2>
+            <ul>
+                <li><strong>File Download:</strong> Fetch files from SharePoint (OneDrive), skipping a sample file.</li>
+                <li><strong>Schema Validation:</strong> Validate file schema by:
+                    <ul>
+                        <li>Checking for expected columns.</li>
+                        <li>Ensuring formats are correct (e.g., dates, numerical values).</li>
+                    </ul>
+                </li>
+                <li><strong>Database Insertion:</strong> Insert data into MariaDB using:
+                    <ul>
+                        <li>Batched inserts with <code>ON DUPLICATE KEY UPDATE</code> to handle updates.</li>
+                        <li>Consistent <code>last_imported</code> timestamps across a batch.</li>
+                    </ul>
+                </li>
+                <li><strong>File Management:</strong>
+                    <ul>
+                        <li>Delete files from SharePoint only after successful database insertion.</li>
+                        <li>Move processed files to the <code>history/</code> folder.</li>
+                        <li>Move invalid files to the <code>error/</code> folder for review.</li>
+                    </ul>
+                </li>
+                <li><strong>Error Handling:</strong> Log all actions and errors for full traceability.</li>
+                <li><strong>Hybrid Execution:</strong>
+                    <ul>
+                        <li>Scheduled runs using Task Scheduler (Windows) or Cron Jobs (Linux).</li>
+                        <li>User-triggered on-demand execution via a button interface.</li>
+                    </ul>
+                </li>
+            </ul>
+
+            <h2>Error Handling & Logging</h2>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Error</th>
+                        <th>Action Taken</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>Authentication fails</td>
+                        <td>Log error and exit pipeline</td>
+                    </tr>
+                    <tr>
+                        <td>File download fails</td>
+                        <td>Log error, skip file</td>
+                    </tr>
+                    <tr>
+                        <td>Schema validation fails</td>
+                        <td>Move file to <code>error/</code>, log warning</td>
+                    </tr>
+                    <tr>
+                        <td>Database insert fails</td>
+                        <td>Move file to <code>error/</code>, log error</td>
+                    </tr>
+                    <tr>
+                        <td>SharePoint delete fails</td>
+                        <td>Log warning, but continue</td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <h2>Challenges and Solutions</h2>
+            <h3>Resource Wastage in Batch Execution</h3>
+            <p><strong>Challenge:</strong> Batch schedules caused significant resource wastage due to unnecessary runs.</p>
+            <p><strong>Solution:</strong> Introduced an on-demand system, reducing the number of redundant batch runs while allowing users to trigger the pipeline as needed.</p>
+
+            <h3>User Wait Times</h3>
+            <p><strong>Challenge:</strong> Users uploading data had to wait up to 6 hours for processing after missing a scheduled refresh.</p>
+            <p><strong>Solution:</strong> Implemented a user-triggered execution system, enabling real-time pipeline execution.</p>
+
+            <h3>Error Handling</h3>
+            <p><strong>Challenge:</strong> Ensuring proper handling of schema validation and file insertion failures.</p>
+            <p><strong>Solution:</strong> Created a robust error-handling system that moves invalid files to the <code>error/</code> folder and logs detailed error messages.</p>
+
+            <h2>Technologies Used</h2>
+            <ul>
+                <li><strong>Data Storage:</strong> MariaDB</li>
+                <li><strong>Pipeline Execution:</strong> Jupyter Notebooks, Papermill</li>
+                <li><strong>On-Demand Interface:</strong> Voila Engine, nssm Service</li>
+                <li><strong>File Management:</strong> SharePoint (OneDrive)</li>
+                <li><strong>Error Logging:</strong> Python Logging Module</li>
+                <li><strong>Scheduling:</strong> Task Scheduler, Cron Jobs</li>
+            </ul>
+
+            <h2>Outcome</h2>
+            <ul>
+                <li><strong>Resource Optimization:</strong> Eliminated redundant batch runs, reducing computational overhead.</li>
+                <li><strong>Improved User Experience:</strong> Enabled immediate data processing, reducing wait times.</li>
+                <li><strong>Hybrid Execution:</strong> Retained backward compatibility with existing batch schedules.</li>
+                <li><strong>Traceability:</strong> Comprehensive logging improved debugging and auditing.</li>
+            </ul>
+
+            <hr />
+            <p><a href="../index.html">← Back to Home</a></p>
+
+        </section>
+    </div>
+
+    <!-- FOOTER -->
+    <div id="footer_wrap" class="outer">
+        <footer class="inner">
+            <p>Published with <a href="https://pages.github.com">GitHub Pages</a></p>
+        </footer>
+    </div>
+
+</body>
+</html>
