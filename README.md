@@ -17,6 +17,10 @@ Below are some of my key projects. Click on each to explore details.
 | Notebook-Based Pipeline Automation | Jupyter Notebooks + Papermill execution framework. | [View Project](projects/project2.html) |
 | On-Demand Data Pipeline     | Hybrid batch and on-demand pipeline system.    | [View Project](projects/project3.html) |
 | Data Processing Pipeline   | An automated pipeline for processing data files    | [View Project](projects/project4.html) |
+| Churn calculation   | An automated pipeline for processing data files    | [View Project](projects/under-construction.html) |
+| LTV calculation   | An automated pipeline for processing data files    | [View Project](projects/under-construction.html) |
+| RFM calculation   | An automated pipeline for processing data files    | [View Project](projects/under-construction.html) |
+| Data Warehousing for Shopify data | A project about fetching data from Shopify and writing data to a relational database | [View Project](projects/under-construction.html)|
 
 ---
 
