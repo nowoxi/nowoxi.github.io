@@ -27,7 +27,7 @@
         <section id="main_content" class="inner">
 
             <h2>Project Overview</h2>
-            <p>This project implements an automated pipeline for processing data files from SharePoint (OneDrive), validating their schema, inserting the data into a MariaDB database, and managing the file lifecycle. The pipeline runs as a scheduled task and ensures proper handling of erroneous files, while successfully processed files are archived for future reference.</p>
+            <p>This project implements an automated pipeline for processing data files from SharePoint (OneDrive), validating their schema, inserting the data into a database, and managing the file lifecycle. The pipeline runs as a scheduled task and ensures proper handling of erroneous files, while successfully processed files are archived for future reference.</p>
 
             <h2>Pipeline Workflow</h2>
             <ul>
@@ -39,7 +39,7 @@
                         <li>Ensure currency fields have no symbols or commas and are formatted as <code>0.0</code>.</li>
                     </ul>
                 </li>
-                <li><strong>Insert Data:</strong> Insert records into MariaDB using batched inserts with <code>ON DUPLICATE KEY UPDATE</code> to update existing entries.</li>
+                <li><strong>Insert Data:</strong> Insert records into DB using batched inserts with <code>ON DUPLICATE KEY UPDATE</code> to update existing entries.</li>
                 <li><strong>File Lifecycle:</strong>
                     <ul>
                         <li>Delete files from SharePoint only after successful database insertion.</li>
@@ -82,7 +82,7 @@ schema:
       type: "date"
     - name: "FY"
       type: "string"
-    - name: "white_label"
+    - name: "group"
       type: "string"
     - name: "Channel"
       type: "string"
@@ -103,12 +103,12 @@ schema:
                 <li><code>0.0</code> for decimals.</li>
             </ul>
 
-            <h2>Database Schema (MariaDB)</h2>
+            <h2>Database Schema (DB)</h2>
             <pre>
 CREATE TABLE `spend` (
   `fd_month` date NOT NULL,
   `FY` char(6) DEFAULT NULL,
-  `white_label` varchar(11) NOT NULL,
+  `group` varchar(11) NOT NULL,
   `Channel` varchar(50) NOT NULL,
   `description` varchar(255) NOT NULL,
   `expense_type` varchar(25) NOT NULL,
@@ -117,7 +117,7 @@ CREATE TABLE `spend` (
   `actual` decimal(13,2) DEFAULT NULL,
   `last_imported` datetime DEFAULT current_timestamp(),
   `created_at` datetime DEFAULT current_timestamp(),
-  PRIMARY KEY (`fd_month`,`white_label`,`Channel`,`expense_type`,`description`)
+  PRIMARY KEY (`fd_month`,`group`,`Channel`,`expense_type`,`description`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
             </pre>
 
@@ -155,7 +155,7 @@ CREATE TABLE `spend` (
 
             <h2>Technologies Used</h2>
             <ul>
-                <li><strong>Data Storage:</strong> MariaDB</li>
+                <li><strong>Data Storage:</strong> DB</li>
                 <li><strong>Pipeline Execution:</strong> Jupyter Notebooks, Papermill</li>
                 <li><strong>Automation:</strong> Task Scheduler, Batch Scripts</li>
                 <li><strong>Error Logging:</strong> Python Logging Module</li>
