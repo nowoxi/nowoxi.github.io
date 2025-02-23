@@ -18,7 +18,7 @@ Below are some of my key projects. Click on each to explore details.
 | On-Demand Data Pipeline     | Hybrid batch and on-demand pipeline system.    | [View Project](projects/project3.html) |
 | Data Processing Pipeline   | An automated pipeline for processing data files    | [View Project](projects/project4.html) |
 | DM+D Pipeline   | dm+d Pipeline to MariaDB    | [View Project](projects/project5.html) |
-| Order report notification system   | An automated pipeline for processing data files    | [View Project](projects/under-construction.html) |
+| Order notification management system   | Automates tracking and managing order statuses while ensuring notification updates remain synchronized.    | [View Project](projects/project6.html) |
 | Churn calculation   | Calculating Churn in SQL    | [View Project](projects/under-construction.html) |
 | LTV calculation   | Calculating LTV in SQL    | [View Project](projects/under-construction.html) |
 | RFM calculation   | Calculating RFM in SQL    | [View Project](projects/under-construction.html) |
