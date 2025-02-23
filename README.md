@@ -17,11 +17,14 @@ Below are some of my key projects. Click on each to explore details.
 | Notebook-Based Pipeline Automation | Jupyter Notebooks + Papermill execution framework. | [View Project](projects/project2.html) |
 | On-Demand Data Pipeline     | Hybrid batch and on-demand pipeline system.    | [View Project](projects/project3.html) |
 | Data Processing Pipeline   | An automated pipeline for processing data files    | [View Project](projects/project4.html) |
+| DM+D Pipeline   | dm+d Pipeline to MariaDB    | [View Project](projects/project5.html) |
+| Order report notification system   | An automated pipeline for processing data files    | [View Project](projects/project6.html) |
 | Churn calculation   | Calculating Churn in SQL    | [View Project](projects/under-construction.html) |
 | LTV calculation   | Calculating LTV in SQL    | [View Project](projects/under-construction.html) |
 | RFM calculation   | Calculating RFM in SQL    | [View Project](projects/under-construction.html) |
 | Data Warehousing for Shopify data | A project about fetching data from Shopify and writing data to a relational database | [View Project](projects/under-construction.html)|
 | Revenue Forecast   | Revenue forecast using Prophet    | [View Project](projects/under-construction.html) |
+| Incremental order reporting in Excel   | Incremental reporting with CSV and power query    | [View Project](projects/under-construction.html) |
 
 ---
 
