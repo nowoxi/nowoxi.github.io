@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="en-US">
+
+<head>
+    <meta charset='utf-8'>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width,maximum-scale=2">
+    <link rel="stylesheet" type="text/css" media="screen" href="/assets/css/style.css">
+
+    <title>Project 6: Order Notification Management System | Dr Adenowo Gbadebo</title>
+    <meta name="description" content="Project 6: Automating order tracking and notification state management with real-time updates and audit logging.">
+
+</head>
+
+<body>
+
+    <!-- HEADER -->
+    <div id="header_wrap" class="outer">
+        <header class="inner">
+            <h1 id="project_title">Dr Adenowo Gbadebo</h1>
+            <h2 id="project_tagline">Project 6: Order Notification Management System</h2>
+        </header>
+    </div>
+
+    <!-- MAIN CONTENT -->
+    <div id="main_content_wrap" class="outer">
+        <section id="main_content" class="inner">
+
+            <h2>Project Overview</h2>
+            <p>The <strong>Order Notification Management System</strong> automates tracking and managing order statuses while ensuring notification updates remain synchronized. The system provides structured audit logs, automated updates, and centralized tracking to streamline order processing.</p>
+
+            <h2>Key Features</h2>
+            <ul>
+                <li><strong>Automated Status Updates</strong>: Ensures order statuses change dynamically.</li>
+                <li><strong>Notification Tracking</strong>: Keeps notification records in sync with orders.</li>
+                <li><strong>Historical Logging</strong>: Maintains a structured record of all modifications.</li>
+                <li><strong>Trigger-Based Updates</strong>: Automates state transitions in the database.</li>
+                <li><strong>Scheduled Processing</strong>: Ensures regular updates and consistency.</li>
+            </ul>
+
+            <h2>System Workflow</h2>
+            <ul>
+                <li><strong>Order Status Tracking</strong>: Maintains the latest status for each order.</li>
+                <li><strong>Notification Logging</strong>: Captures when notifications are sent.</li>
+                <li><strong>Status Synchronization</strong>: Updates order statuses based on notifications.</li>
+                <li><strong>Audit Logging</strong>: Keeps a history of all order status changes.</li>
+                <li><strong>Automated Processing</strong>: Runs at scheduled intervals to update records.</li>
+            </ul>
+
+            <h2>Core Components</h2>
+
+            <h3>1. Order Status Table</h3>
+            <p>Tracks the current status of orders and their notification states.</p>
+            <pre>
+| Column Name          | Type             | Description |
+|----------------------|-----------------|-------------|
+| `order_id`          | `INT PRIMARY KEY` | Unique identifier for the order. |
+| `order_status`      | `ENUM('Confirmed', 'Pending')` | Current state of the order. |
+| `notification_status` | `ENUM('Sent', 'Pending', 'Failed')` | Current notification status. |
+| `last_updated`      | `TIMESTAMP`      | Last update timestamp. |
+            </pre>
+
+            <h3>2. Notification Log Table</h3>
+            <p>Records notifications sent for each order.</p>
+            <pre>
+| Column Name         | Type             | Description |
+|---------------------|-----------------|-------------|
+| `notification_id`  | `INT PRIMARY KEY AUTO_INCREMENT` | Unique notification ID. |
+| `order_id`        | `INT`            | Associated order ID. |
+| `notification_time` | `TIMESTAMP DEFAULT CURRENT_TIMESTAMP` | Timestamp of notification. |
+            </pre>
+
+            <h3>3. Status History Table</h3>
+            <p>Maintains an audit log of all changes to order statuses.</p>
+            <pre>
+| Column Name           | Type             | Description |
+|-----------------------|-----------------|-------------|
+| `history_id`         | `INT PRIMARY KEY AUTO_INCREMENT` | Unique record ID. |
+| `order_id`          | `INT`            | Order ID being tracked. |
+| `order_status`      | `ENUM('Confirmed', 'Pending')` | Status before change. |
+| `notification_status` | `ENUM('Sent', 'Pending', 'Failed')` | Previous notification state. |
+| `change_time`       | `TIMESTAMP DEFAULT CURRENT_TIMESTAMP` | Timestamp of change. |
+            </pre>
+
+            <h2>Automation & Triggers</h2>
+            <ul>
+                <li><strong>Status Update Trigger</strong>: Ensures previous statuses are logged before updates.</li>
+                <li><strong>Notification Trigger</strong>: Updates order statuses when a notification is logged.</li>
+                <li><strong>Automated Processing</strong>: A stored procedure processes order updates at scheduled intervals.</li>
+            </ul>
+
+            <h2>How It Works</h2>
+
+            <h3>Processing Orders</h3>
+            <p>To process new and modified orders, run the stored procedure:</p>
+            <pre>
+CALL process_orders();
+            </pre>
+
+            <h3>Recording a Notification Event</h3>
+            <p>When a notification is sent, log it into the notification table:</p>
+            <pre>
+INSERT INTO notification_log (order_id, notification_time) VALUES (987654, CURRENT_TIMESTAMP);
+            </pre>
+
+            <h3>Querying Order History</h3>
+            <p>To retrieve the history of an order:</p>
+            <pre>
+SELECT * FROM order_status_history WHERE order_id = 987654 ORDER BY change_time DESC;
+            </pre>
+
+            <h3>Automated Processing with Scheduled Events</h3>
+            <p>To keep order statuses updated automatically:</p>
+            <pre>
+CREATE EVENT process_orders_event
+ON SCHEDULE EVERY 1 DAY
+DO CALL process_orders();
+            </pre>
+
+            <h2>Error Handling & Logging</h2>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Error</th>
+                        <th>Action Taken</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>Invalid state transition</td>
+                        <td>Log error, reject update</td>
+                    </tr>
+                    <tr>
+                        <td>Notification failure</td>
+                        <td>Flag as pending, retry later</td>
+                    </tr>
+                    <tr>
+                        <td>Data inconsistency</td>
+                        <td>Log issue for manual review</td>
+                    </tr>
+                    <tr>
+                        <td>Unauthorized update attempt</td>
+                        <td>Reject update, log event</td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <h2>Key Benefits</h2>
+            <ul>
+                <li><strong>Automated & Centralized</strong>: Reduces manual work and ensures consistency.</li>
+                <li><strong>Consistent Notification Handling</strong>: Synchronizes order and notification data.</li>
+                <li><strong>Full Audit Trail</strong>: Maintains a historical log for compliance.</li>
+                <li><strong>Efficient & Scalable</strong>: Handles large-scale updates with minimal overhead.</li>
+            </ul>
+
+            <hr />
+            <p><a href="../index.html">← Back to Home</a></p>
+
+        </section>
+    </div>
+
+    <!-- FOOTER -->
+    <div id="footer_wrap" class="outer">
+        <footer class="inner">
+            <p>Published with <a href="https://pages.github.com">GitHub Pages</a></p>
+        </footer>
+    </div>
+
+</body>
+</html>
