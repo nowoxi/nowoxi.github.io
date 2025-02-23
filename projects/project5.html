@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="en-US">
+
+<head>
+    <meta charset='utf-8'>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width,maximum-scale=2">
+    <link rel="stylesheet" type="text/css" media="screen" href="/assets/css/style.css">
+
+    <title>Project 5: dm+d Pipeline to MariaDB | Dr Adenowo Gbadebo</title>
+    <meta name="description" content="Project 5: Automating the extraction, validation, and loading of NHS dm+d XML data into MariaDB.">
+
+</head>
+
+<body>
+
+    <!-- HEADER -->
+    <div id="header_wrap" class="outer">
+        <header class="inner">
+            <h1 id="project_title">Dr Adenowo Gbadebo</h1>
+            <h2 id="project_tagline">Project 5: dm+d Pipeline to MariaDB</h2>
+        </header>
+    </div>
+
+    <!-- MAIN CONTENT -->
+    <div id="main_content_wrap" class="outer">
+        <section id="main_content" class="inner">
+
+            <h2>Project Overview</h2>
+            <p>This project automates the extraction, validation, and loading of NHS dm+d (Dictionary of Medicines and Devices) XML data into a MariaDB database. The pipeline fetches XML data from SharePoint, validates it against XSD schemas, processes the data into structured formats, and loads it into a database for further analysis and use.</p>
+
+            <h2>Key Features</h2>
+            <ul>
+                <li>Automatically downloads ZIP files from SharePoint, excluding a predefined sample file.</li>
+                <li>Extracts nested ZIP archives and processes their contents.</li>
+                <li>Validates XML files against their corresponding XSD schemas.</li>
+                <li>Parses XML files into structured pandas DataFrames.</li>
+                <li>Appends a <code>last_imported</code> timestamp to each row.</li>
+                <li>Inserts data into MariaDB tables with <code>dmd_</code> prefixes.</li>
+                <li>Archives successfully processed ZIP files into a history folder.</li>
+                <li>Deletes original files from SharePoint after successful processing.</li>
+                <li>Moves failed files to an error folder for further inspection.</li>
+                <li>Logs all operations for audit and debugging purposes.</li>
+            </ul>
+
+            <h2>Pipeline Workflow</h2>
+            <ul>
+                <li><strong>Download Files:</strong> Fetches ZIP files from SharePoint, ignoring a sample template.</li>
+                <li><strong>Extract ZIPs:</strong> Unzips all downloaded files, including any nested ZIPs.</li>
+                <li><strong>Validate XML:</strong> Checks XML files against their corresponding XSD schemas.</li>
+                <li><strong>Parse Data:</strong> Converts XML content into structured pandas DataFrames.</li>
+                <li><strong>Database Insertion:</strong> Uses <code>ON DUPLICATE KEY UPDATE</code> to ensure data integrity.</li>
+                <li><strong>File Management:</strong> Moves valid files to the <code>history/</code> folder, and invalid files to <code>error/</code>.</li>
+                <li><strong>Logging:</strong> Tracks all actions for traceability.</li>
+            </ul>
+
+            <h2>Folder Structure</h2>
+            <pre>
+dm+d_Pipeline/
+│
+├── config/
+│   └── .env
+│
+├── downloads/                 # Temporary storage for downloaded files
+├── history/                   # Stores processed files
+├── error/                     # Stores files that failed validation
+├── processing/                # Working directory for processing XML data
+            </pre>
+
+            <h2>Required Environment Variables</h2>
+            <pre>
+SHAREPOINT_SITE_URL=<SharePoint site URL>
+SHAREPOINT_FOLDER_URL=<SharePoint folder relative URL>
+SHAREPOINT_SAMPLE_FILE=<Sample file name to ignore>
+SHAREPOINT_USERNAME=<SharePoint username>
+
+DB_HOST=<Database host>
+DB_NAME=<Database name>
+DB_USER=<Database username>
+LOG_FILE=logs/dmd_pipeline.log
+            </pre>
+
+            <h2>Database Table Mapping</h2>
+            <p>The following dictionary is used to map XML root elements to their corresponding MariaDB tables:</p>
+            <pre>
+TABLE_MAPPING = {
+    'vtm': 'dmd_virtual_therapeutic_moiety',
+    'vmp': 'dmd_virtual_medicinal_product',
+    'amp': 'dmd_actual_medicinal_product',
+    'vmpp': 'dmd_virtual_medicinal_product_pack',
+    'ampp': 'dmd_actual_medicinal_product_pack',
+    'gtin': 'dmd_gtin'
+}
+            </pre>
+
+            <h2>Dependencies</h2>
+            <p>Ensure all required libraries are installed:</p>
+            <pre>
+pip install pandas lxml python-dotenv SQLAlchemy pymysql
+            </pre>
+
+            <h2>Running the Pipeline</h2>
+            <p>Execute the pipeline script to process and load data:</p>
+            <pre>
+python dmd_pipeline_mariadb.py
+            </pre>
+
+            <h2>Error Handling</h2>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Error</th>
+                        <th>Action Taken</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>SharePoint authentication failure</td>
+                        <td>Log error and exit</td>
+                    </tr>
+                    <tr>
+                        <td>File download failure</td>
+                        <td>Log error and skip file</td>
+                    </tr>
+                    <tr>
+                        <td>XML schema validation failure</td>
+                        <td>Move file to <code>error/</code> folder</td>
+                    </tr>
+                    <tr>
+                        <td>Database insertion failure</td>
+                        <td>Move file to <code>error/</code> folder</td>
+                    </tr>
+                    <tr>
+                        <td>SharePoint file deletion failure</td>
+                        <td>Log warning but continue</td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <h2>Logging</h2>
+            <p>All actions are logged in the specified log file (<code>logs/dmd_pipeline.log</code>) with timestamps and error messages.</p>
+
+            <h2>Key Functions</h2>
+            <ul>
+                <li><code>download_files_from_sharepoint()</code>: Fetches files from SharePoint.</li>
+                <li><code>extract_zip()</code>: Extracts ZIP files recursively.</li>
+                <li><code>validate_xml()</code>: Validates XML against XSD.</li>
+                <li><code>parse_xsd_for_fields()</code>: Extracts schema information.</li>
+                <li><code>parse_xml_to_df()</code>: Converts XML to a structured pandas DataFrame.</li>
+                <li><code>insert_into_mariadb()</code>: Loads data into MariaDB.</li>
+                <li><code>move_file()</code>: Moves files to <code>history/</code> or <code>error/</code> directories.</li>
+                <li><code>delete_file_from_onedrive()</code>: Removes processed files from SharePoint.</li>
+            </ul>
+
+
+            <hr />
+            <p><a href="../index.html">← Back to Home</a></p>
+
+        </section>
+    </div>
+
+    <!-- FOOTER -->
+    <div id="footer_wrap" class="outer">
+        <footer class="inner">
+            <p>Published with <a href="https://pages.github.com">GitHub Pages</a></p>
+        </footer>
+    </div>
+
+</body>
+</html>
