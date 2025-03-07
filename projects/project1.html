@@ -7,8 +7,8 @@
     <meta name="viewport" content="width=device-width,maximum-scale=2">
     <link rel="stylesheet" type="text/css" media="screen" href="/assets/css/style.css">
 
-    <title>Project 1: Data Warehousing for Aircall Data | Dr Adenowo Gbadebo</title>
-    <meta name="description" content="Project 1: Data Warehousing for Aircall Data - Data Engineering and Analytics">
+    <title>Project 1: Telephony Data Warehouse | Dr Adenowo Gbadebo</title>
+    <meta name="description" content="Project 1: A data warehouse solution for processing and analyzing telephony performance data.">
 
 </head>
 
@@ -18,7 +18,7 @@
     <div id="header_wrap" class="outer">
         <header class="inner">
             <h1 id="project_title">Dr Adenowo Gbadebo</h1>
-            <h2 id="project_tagline">Project 1: Data Warehousing for Aircall Data</h2>
+            <h2 id="project_tagline">Project 1: Telephony Data Warehouse</h2>
         </header>
     </div>
 
@@ -26,105 +26,117 @@
     <div id="main_content_wrap" class="outer">
         <section id="main_content" class="inner">
 
-            <h2 id="project-overview">Project Overview</h2>
-            <p>Services through phone calls facilitated by <strong>Aircall</strong>, a cloud-based telephony platform. 
-                The board tasked me with building a <strong>data warehouse</strong> to centralize, organize, and 
-                analyze team performance data.</p>
-            <p>The data warehouse provides insights into key metrics such as call duration, advisor availability, and 
-                patient engagement, enabling management to evaluate team performance and operational efficiency.</p>
+            <h2>Project Overview</h2>
+            <p>This project focuses on designing and implementing a <strong>data warehouse</strong> to centralize, organize, and analyze performance data from a cloud-based telephony system. The goal was to provide structured insights into key operational metrics, enabling better decision-making and efficiency improvements.</p>
 
-            <h2 id="objectives">Objectives</h2>
+            <h2>Objectives</h2>
             <ul>
-                <li><strong>Data Centralization:</strong> Integrate raw data from the Aircall API into a structured data warehouse.</li>
-                <li><strong>Data Modeling:</strong> Design a scalable schema to store key metrics.</li>
-                <li><strong>Performance Monitoring:</strong> Enable analysis of team effectiveness through key metrics.</li>
-                <li><strong>Visualization:</strong> Provide actionable insights via interactive Tableau dashboards.</li>
+                <li><strong>Data Centralization</strong> – Collect and store raw data from a telephony API into a structured data warehouse.</li>
+                <li><strong>Data Modeling</strong> – Design a scalable schema optimized for querying and analysis.</li>
+                <li><strong>Performance Monitoring</strong> – Enable the evaluation of team effectiveness through key operational metrics.</li>
+                <li><strong>Visualization</strong> – Deliver insights via interactive dashboards for non-technical stakeholders.</li>
             </ul>
 
-            <h2 id="project-workflow">Project Workflow</h2>
+            <h2>Project Workflow</h2>
 
             <h3>Data Integration</h3>
             <ul>
-                <li>Connected to the Aircall API to extract call logs, availability, and engagement data.</li>
-                <li>Automated data ingestion pipelines to store data in MariaDB.</li>
+                <li>Connected to a <strong>telephony API</strong> to extract call logs, availability, and engagement data.</li>
+                <li>Developed <strong>automated data ingestion pipelines</strong> to store structured data in a relational database.</li>
             </ul>
 
             <h3>Data Warehouse Design</h3>
             <ul>
-                <li>Designed a <strong>star schema</strong> with fact and dimension tables.</li>
-                <li>Normalized data to ensure scalability and efficient querying.</li>
+                <li>Designed a <strong>star schema</strong> using <strong>fact and dimension tables</strong> for efficient querying.</li>
+                <li>Normalized data to enhance <strong>scalability and performance</strong>.</li>
             </ul>
 
             <h3>ETL Pipeline Development</h3>
             <ul>
-                <li>Developed an ETL process to:
-                    <ul>
-                        <li>Extract raw data from the Aircall API.</li>
-                        <li>Transform data into the required format.</li>
-                        <li>Load processed data into MariaDB tables.</li>
-                    </ul>
-                </li>
+                <li>Developed an <strong>ETL (Extract, Transform, Load) process</strong> to:</li>
+                <ul>
+                    <li><strong>Extract</strong> raw data from the API.</li>
+                    <li><strong>Transform</strong> and clean the data to align with schema requirements.</li>
+                    <li><strong>Load</strong> processed data into a relational database.</li>
+                </ul>
             </ul>
 
-            <h3>Data Analysis</h3>
+            <h3>Data Analysis & Reporting</h3>
             <ul>
-                <li>Queried data to compute key performance metrics:
-                    <ul>
-                        <li>Total calls per advisor.</li>
-                        <li>Average call duration and trends.</li>
-                        <li>Advisor availability rates.</li>
-                        <li>Patient interaction success rates.</li>
-                    </ul>
-                </li>
+                <li>Computed <strong>key performance metrics</strong>, including:</li>
+                <ul>
+                    <li>Total calls handled per advisor.</li>
+                    <li>Average call duration and time trends.</li>
+                    <li>Advisor availability and efficiency rates.</li>
+                    <li>Engagement success rates.</li>
+                </ul>
+                <li>Developed <strong>interactive dashboards</strong> to visualize performance insights and trends.</li>
             </ul>
 
-            <h3>Dashboard Creation</h3>
+            <h2>Challenges and Solutions</h2>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Challenge</th>
+                        <th>Solution</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><strong>API Data Integration</strong> – Complex nested data structures.</td>
+                        <td>Flattened data structures during ETL for better compatibility.</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Schema Design</strong> – Balancing flexibility with query performance.</td>
+                        <td>Implemented a <strong>star schema</strong> to support both complex queries and scalability.</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Data Quality</strong> – Inconsistent and missing data.</td>
+                        <td>Added <strong>validation rules and transformation logic</strong> in the ETL pipeline.</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Stakeholder Reporting</strong> – Presenting technical insights in a user-friendly format.</td>
+                        <td>Created <strong>simplified dashboards with tooltips</strong> for intuitive data interpretation.</td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <h2>Technologies Used</h2>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Category</th>
+                        <th>Technology</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><strong>Data Integration</strong></td>
+                        <td>Telephony API</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Data Warehouse</strong></td>
+                        <td>Relational Database (MariaDB or PostgreSQL)</td>
+                    </tr>
+                    <tr>
+                        <td><strong>ETL Pipeline</strong></td>
+                        <td>SQL, Python</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Data Visualization</strong></td>
+                        <td>Tableau, Power BI</td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <h2>Outcome</h2>
             <ul>
-                <li>Designed Tableau dashboards to visualize:
-                    <ul>
-                        <li>Team and individual performance.</li>
-                        <li>Trends in call activity.</li>
-                        <li>Metrics for patient engagement.</li>
-                    </ul>
-                </li>
-            </ul>
-
-            <h2 id="challenges-and-solutions">Challenges and Solutions</h2>
-
-            <h3>API Data Integration</h3>
-            <p><strong>Challenge:</strong> Complex, nested data structures from the Aircall API.<br>
-                <strong>Solution:</strong> Flattened data structures during ETL for better compatibility.</p>
-
-            <h3>Schema Design</h3>
-            <p><strong>Challenge:</strong> Balancing schema flexibility with query performance.<br>
-                <strong>Solution:</strong> Implemented a star schema for efficiency.</p>
-
-            <h3>Data Quality</h3>
-            <p><strong>Challenge:</strong> Inconsistent and missing data.<br>
-                <strong>Solution:</strong> Added validation checks and transformation rules in ETL.</p>
-
-            <h3>Stakeholder Reporting</h3>
-            <p><strong>Challenge:</strong> Communicating technical insights in a non-technical format.<br>
-                <strong>Solution:</strong> Developed simplified Tableau dashboards with tooltips.</p>
-
-            <h2 id="technologies-used">Technologies Used</h2>
-            <ul>
-                <li><strong>Data Integration:</strong> Aircall API</li>
-                <li><strong>Data Warehouse:</strong> MariaDB</li>
-                <li><strong>ETL Pipeline:</strong> SQL, Python</li>
-                <li><strong>Data Visualization:</strong> Tableau</li>
-            </ul>
-
-            <h2 id="outcome">Outcome</h2>
-            <ul>
-                <li><strong>Centralized Data Warehouse:</strong> Built a robust data warehouse for PAT performance data.</li>
-                <li><strong>Actionable Insights:</strong> Enabled tracking of advisor performance and efficiency.</li>
-                <li><strong>Scalable Solution:</strong> Designed a schema capable of handling growing data volumes.</li>
+                <li><strong>Centralized Data Warehouse</strong> – Established a structured system for tracking key performance data.</li>
+                <li><strong>Actionable Insights</strong> – Enabled better decision-making through real-time performance monitoring.</li>
+                <li><strong>Scalable Solution</strong> – Designed a flexible schema that accommodates increasing data volume.</li>
             </ul>
 
             <hr />
-
-            <h2 id="navigation">Navigation</h2>
             <p><a href="../index.html">← Back to Home</a></p>
 
         </section>
