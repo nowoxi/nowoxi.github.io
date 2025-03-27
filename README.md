@@ -1,6 +1,6 @@
 
 ## About Me  
-I am a Strategic and Innovative Data Analytics Manager with expertise in data transformations, advanced data frameworks, and delivering actionable insights for informed decision-making. My skills span across financial data pipelines, predictive modeling, and process optimization.  
+I am a Strategic and Innovative Data Manager with expertise in data transformations, advanced data frameworks, and delivering actionable insights for informed decision-making. My skills span across financial data pipelines, predictive modeling, and process optimization.  
 
 I specialize in bridging technical capabilities with business needs, ensuring data-driven strategies align with corporate objectives. I am passionate about leveraging data to create value, streamline operations, and drive impactful initiatives.  
 
